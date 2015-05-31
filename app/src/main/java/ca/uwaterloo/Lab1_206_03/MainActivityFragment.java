@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Arrays;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+import ca.uwaterloo.sensortoy.LineGraphView;
 
 public class MainActivityFragment extends Fragment {
 
+    // Variable declarations
     private SensorManager sensorManager;
     private SensorEventListener lightEventListener, accelerometerEventListener, magneticFieldEventListener, rotationVectorEventListener;
 
@@ -34,11 +34,11 @@ public class MainActivityFragment extends Fragment {
         LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.label);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        // Initaliaze a graph for displaying accelerometer data
-//        LineGraphView graph;
-//        graph = new LineGraphView(getApplicationContext(),100,Arrays.asList("x", "y", "z"));
-//        layout.addView(graph);
-//        graph.setVisibility(View.VISIBLE);
+        // Initialize a graph for displaying accelerometer data
+        LineGraphView graph;
+        graph = new LineGraphView(rootView.getContext(),100, Arrays.asList("x", "y", "z"));
+        layout.addView(graph);
+        graph.setVisibility(View.VISIBLE);
 
         // Initialize the sensor manager for our sensors
         sensorManager = (SensorManager) rootView.getContext().getSystemService(rootView.getContext().SENSOR_SERVICE);
@@ -54,7 +54,7 @@ public class MainActivityFragment extends Fragment {
         TextView xMaxAccelerometerTextView = new TextView(rootView.getContext());
         TextView yMaxAccelerometerTextView = new TextView(rootView.getContext());
         TextView zMaxAccelerometerTextView = new TextView(rootView.getContext());
-        accelerometerEventListener = new AccelerometerSensorEventListener(xAccelerometerTextView, yAccelerometerTextView, zAccelerometerTextView, xMaxAccelerometerTextView, yMaxAccelerometerTextView, zMaxAccelerometerTextView);
+        accelerometerEventListener = new AccelerometerSensorEventListener(graph, xAccelerometerTextView, yAccelerometerTextView, zAccelerometerTextView, xMaxAccelerometerTextView, yMaxAccelerometerTextView, zMaxAccelerometerTextView);
         sensorManager.registerListener(accelerometerEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
         // Create the magnetic field sensor event listener
@@ -83,22 +83,23 @@ public class MainActivityFragment extends Fragment {
         newLine2.setText("");
         newLine3.setText("");
         newLine4.setText("");
-        layout.addView(lightTextView);
         layout.addView(newLine1);
+        layout.addView(lightTextView);
+        layout.addView(newLine2);
         layout.addView(xAccelerometerTextView);
         layout.addView(yAccelerometerTextView);
         layout.addView(zAccelerometerTextView);
         layout.addView(xMaxAccelerometerTextView);
         layout.addView(yMaxAccelerometerTextView);
         layout.addView(zMaxAccelerometerTextView);
-        layout.addView(newLine2);
+        layout.addView(newLine3);
         layout.addView(xMagneticFieldTextView);
         layout.addView(yMagneticFieldTextView);
         layout.addView(zMagneticFieldTextView);
         layout.addView(xMaxMagneticFieldTextView);
         layout.addView(yMaxMagneticFieldTextView);
         layout.addView(zMaxMagneticFieldTextView);
-        layout.addView(newLine3);
+        layout.addView(newLine4);
         layout.addView(xRotationTextView);
         layout.addView(yRotationTextView);
         layout.addView(zRotationTextView);
