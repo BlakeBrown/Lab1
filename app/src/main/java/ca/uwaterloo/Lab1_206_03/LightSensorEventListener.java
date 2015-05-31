@@ -6,11 +6,11 @@ import android.hardware.SensorEventListener;
 import android.widget.TextView;
 
 public class LightSensorEventListener implements SensorEventListener {
-    TextView output;
-    float light;
+    TextView lightView;
+    float lightValue;
 
-    public LightSensorEventListener(TextView outputView) {
-        output = outputView;
+    public LightSensorEventListener(TextView view1) {
+        lightView = view1;
     }
 
     public void onAccuracyChanged(Sensor s, int i) {
@@ -19,11 +19,10 @@ public class LightSensorEventListener implements SensorEventListener {
 
     public void onSensorChanged(SensorEvent se) {
         if (se.sensor.getType() == Sensor.TYPE_LIGHT) {
-            // the variable se.values is an array of type int[] or double[].
-            // the first value (se.values[0]) contains the value
-            // of the light sensor. store it somewhere useful.
-            light = se.values[0];
-            output.setText("Light = " + light);
+            // Get the sensor value from se.values
+            lightValue = se.values[0];
+            // Update the TextView
+            lightView.setText("Light: " + lightValue);
         }
     }
 }
